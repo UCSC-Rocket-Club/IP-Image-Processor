@@ -73,7 +73,7 @@ def process(frame):
             frame = cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
             cv2.putText(frame, 'BLUE',(x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0))
             
-    # Write Box for Red
+    # Write Box for Pink
     for pic, contour in enumerate(contoursRed):
         area = cv2.contourArea(contour)
         if area > 300:
