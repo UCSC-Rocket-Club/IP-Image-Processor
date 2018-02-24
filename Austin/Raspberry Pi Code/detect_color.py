@@ -79,14 +79,14 @@ def process(frame):
         if area > 300:
             x,y,w,h = cv2.boundingRect(contour)
             frame = cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),2)
-            cv2.putText(frame, 'RED',(x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255))
+            cv2.putText(frame, 'PINK',(x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255))
      
     # Write Box for Yellow
     for pic, contour in enumerate(contoursYellow):
         area = cv2.contourArea(contour)
         if area > 300:
             x,y,w,h = cv2.boundingRect(contour)
-            frame = cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
+            frame = cv2.rectangle(frame,(x,y),(x+w,y+h),(255,255,0),2)
             cv2.putText(frame, 'YELLOW',(x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,255,0))
             
     return frame
