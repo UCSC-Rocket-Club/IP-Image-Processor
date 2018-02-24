@@ -7,13 +7,17 @@ cap = cv2.VideoCapture(0)
 fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
 video = cv2.VideoWriter('output.avi', fourcc, 20, (640,480))
 
-# Set Range of color to be tracked in this case blue
+# Set Range of blue to be tracked
 lowerBlue = np.array([100,100,100])
 upperBlue = np.array([140,255,255])
 
-# Set Range of color to be tracked in this case red
-lowerRed = np.array([0,100,100])
-upperRed = np.array([10,255,255])
+# Set Range of pink to be tracked
+lowerRed = np.array([125, 100, 30])
+upperRed = np.array([255, 255, 255])
+
+# Set Range of yellow to be tracked
+lowerYellow = np.array([0, 204, 204])
+upperYellow = np.array([153, 255, 255])
 
 #Set Colors
 #red = [0,0,255]
@@ -29,6 +33,7 @@ while True:
     # Threshold the HSV image to get only color wanted
     maskBlue = cv2.inRange(hsv, lowerBlue, upperBlue)
     maskRed = cv2.inRange(hsv, lowerRed, upperRed)
+    maskYellow = cv2.inRange(hsv, lowerYellow, upperYellow)
     
     #maskBlue = cv2.inRange(lab, blue)
     #maskRed = cv2.inRange(lab, red)
@@ -36,6 +41,7 @@ while True:
     #Apply Median Blur to mask
     medianMaskBlue = cv2.medianBlur(maskBlue,15)
     medianMaskRed = cv2.medianBlur(maskRed,15)
+    medianMaskYellow = cv2.medianBlur(maskYellow,15)
         
     #Find Blue object to be tracked
     kernal = np.ones((5,5), 'uint8')
@@ -45,6 +51,9 @@ while True:
     
     red =cv2.dilate(medianMaskRed,kernal)
     _, contoursRed, _ = cv2.findContours(red,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    
+    yellow =cv2.dilate(medianMaskYellow,kernal)
+    _, contoursYellow, _ = cv2.findContours(yellow,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     
     # Write Box for Blue
     for pic, contour in enumerate(contoursBlue):
@@ -61,14 +70,22 @@ while True:
             x,y,w,h = cv2.boundingRect(contour)
             frame = cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),2)
             cv2.putText(frame, 'RED',(x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255))
+     
+    # Write Box for Yellow
+    for pic, contour in enumerate(contoursYellow):
+        area = cv2.contourArea(contour)
+        if area > 300:
+            x,y,w,h = cv2.boundingRect(contour)
+            frame = cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
+            cv2.putText(frame, 'YELLOW',(x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,255,0))
         
     #Make frame tracking object
     #result = cv2.drawContours(frame, contours, -1, (0,0,0), 3)
         
     #Display live video frame
     cv2.imshow('frame',frame)
-    cv2.imshow('mask',maskBlue)
-    cv2.imshow('Blue Median Blur Mask', medianMaskBlue)
+    #cv2.imshow('mask',maskBlue)
+    #cv2.imshow('Blue Median Blur Mask', medianMaskBlue)
     #cv2.imshow('Result',result)
         
     # Write frame to file
