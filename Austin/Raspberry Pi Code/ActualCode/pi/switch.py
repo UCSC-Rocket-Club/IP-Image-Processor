@@ -40,7 +40,7 @@ while True:
 	if status == 1:
 		GPIO.output(10,GPIO.HIGH)
 	        	
-                print('fuck wiht me you know i got it -Dan with love') 
+                print('fuck wiht me you know i got it') 
                 c.record()                
                 GPIO.output(10,GPIO.LOW)
 		#except:

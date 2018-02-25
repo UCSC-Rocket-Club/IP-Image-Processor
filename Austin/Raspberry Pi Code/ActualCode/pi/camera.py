@@ -8,25 +8,25 @@ import cv2
 
 def record():
             
-    #shutil.rmtree('/home/pi/images/')
-    #os.mkdir('/home/pi/images')
-    #folder = '/home/pi/images/'
+    shutil.rmtree('/home/pi/images/')
+    os.mkdir('/home/pi/images')
+    folder = '/home/pi/images/'
     camera = PiCamera()
     camera.resolution = (640, 480)
-    camera.framerate = 30
+    camera.framerate = 20
     rawCapture = PiRGBArray(camera, size=(640, 480))
     
     timeStamp = str(time.time())
-    fourcc = cv2.VideoWriter_fourcc('H','2','6','4')
-    video = cv2.VideoWriter(timeStamp + '.h264', fourcc, 20, (640,480))
+    fourcc = cv2.cv.CV_FOURCC('M','J','P','G')
+    video = cv2.VideoWriter(folder + timeStamp + '.avi', fourcc, 20, (640,480))
     
     clock = 0
         
-    for frame in camera.capture(rawCapture, format="bgr", use_video_port=True):
+    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
         image = frame.array
         startTime = time.clock()
         image = dc.process(image)
-        cv2.imshow('Video',image)
+        #cv2.imshow('Video',image)
         #print(clock)
         clock += time.clock() - startTime
         video.write(image)
@@ -35,5 +35,5 @@ def record():
            break
         
     video.release()
-    rawCapture.release()
+    frame.release()
     cv2.destroyAllWindows()
