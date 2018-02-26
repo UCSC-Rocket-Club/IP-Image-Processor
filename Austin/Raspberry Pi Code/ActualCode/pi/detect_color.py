@@ -1,17 +1,8 @@
-# USAGE
-# python detect_color.py --image example_shapes.png
-
-# import the necessary packages
-#from pyimagesearch.shapedetector import ShapeDetector
-#from pyimagesearch.colorlabeler import ColorLabeler
-#import argparse
-#import imutils
 import cv2
 import numpy as np
 import os
 import time
 import shutil
-# from __future__ import print_function
 
 
 
@@ -26,13 +17,13 @@ def adjust_gamma(image, gamma=1.0):
     return cv2.LUT(image, table)
 
 def anal_video():
-    shutil.rmtree('/home/pi/prod')
+    shutil.rmtree('/home/pi/prod/')
     os.mkdir('/home/pi/prod')
     folder = '/home/pi/prod/'
 
     timeStamp = str(time.time())
     fourcc = cv2.cv.CV_FOURCC('M','J','P','G')
-    video = cv2.VideoWriter(folder + timeStamp + '.avi', fourcc, 20, (640, 480))
+    video = cv2.VideoWriter(folder + timeStamp + '.avi', fourcc, 30, (640, 480))
     clock = 0
     start_time = time.clock()
 
@@ -43,10 +34,12 @@ def anal_video():
             image_analyzed = process(image_fetched)
             video.write(image_analyzed)
             os.remove(image_path)
-        clock = time.clock() - start_time
-        if(clock > 60):
-            video.release()
+        else:
+            video.realease()
+            print('Video Done '+ clock + 's\n')
             break
+        clock = time.clock() - start_time
+        print('Video: ' + clock + 's\n')
 
 def process(frame):
 
@@ -77,7 +70,7 @@ def process(frame):
     medianMaskRed = cv2.medianBlur(maskRed,15)
     medianMaskYellow = cv2.medianBlur(maskYellow,15)
         
-    #Find Blue object to be tracked
+    #Find colored object to be tracked
     kernal = np.ones((5,5), 'uint8')
     
     blue = cv2.dilate(medianMaskBlue,kernal)

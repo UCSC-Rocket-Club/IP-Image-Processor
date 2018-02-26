@@ -1,10 +1,12 @@
-import record
+import camera
 import detect_color as dc
-import time
 from multiprocessing import Process, Queue, Lock
 
-p1 = Process(target=record.record)
-p2 = Process(target=dc.anal_video)
+def thread():
+    p1 = Process(target=camera.record)
+    p2 = Process(target=dc.anal_video)
 
-p1.start()
-p2.start()
+    print('Buckle up, butter cup. You just flipped my bitch switch\n')
+
+    p1.start()
+    p2.start()

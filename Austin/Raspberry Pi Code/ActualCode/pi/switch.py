@@ -3,8 +3,7 @@ import time
 import signal
 import sys
 import os
-
-import camera as c
+import run
 
 
 GPIO.setmode(GPIO.BCM)
@@ -41,7 +40,7 @@ while True:
 		GPIO.output(10,GPIO.HIGH)
 	        	
                 print('fuck wiht me you know i got it') 
-                c.record()                
+                run.thread()              
                 GPIO.output(10,GPIO.LOW)
 		#except:
 		#	GPIO.output(10,GPIO.LOW)
