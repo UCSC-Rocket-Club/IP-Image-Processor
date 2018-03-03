@@ -10,11 +10,14 @@ def thread():
     #p1 = Process(target=camera.record)
 
     print('Buckle up, butter cup. You just flipped my bitch switch\n')
-    adxl = ADXL345()
-
-    GPIO.setmode(GPIO.BCM)
+	GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
     GPIO.setup(10, GPIO.LOW)
+	GPIO.setup(21, GPIO.LOW)
+	GPIO.output(21, GPIO.HIGH)
+	
+    adxl = ADXL345()
+
     GPIO.output(10, GPIO.HIGH)
         
     while True:
@@ -22,7 +25,7 @@ def thread():
         xyforce = math.sqrt(axes['x'] ** 2 + axes['y'] ** 2)
         netforce = math.sqrt(xyforce ** 2 + axes['z'] ** 2)
 
-        if(netforce >= 2):
+        if(netforce >= 3):
             GPIO.output(10, GPIO.LOW)
             print('LAUNCH LAUNCH LAUNCH LAUNCH LAUNCH')
             break

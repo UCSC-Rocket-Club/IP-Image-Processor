@@ -35,7 +35,7 @@ def record():
         print('time: ' + str(clock))
         rawCapture.truncate(0)
 
-        if clock > 5:
+        if clock > 10:
             print('Camera Done ' + str(clock) +'s\n')
             rawCapture.close()
             camera.close()
