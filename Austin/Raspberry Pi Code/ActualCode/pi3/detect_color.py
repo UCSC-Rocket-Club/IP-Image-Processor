@@ -78,8 +78,8 @@ def process(frame):
     upperRed = np.array([255, 255, 255])
 
     # Set Range of yellow to be tracked
-    lowerYellow = np.array([0, 204, 204])
-    upperYellow = np.array([153, 255, 255])
+    lowerYellow = np.array([20, 100, 100])
+    upperYellow = np.array([30, 255, 255])
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         
