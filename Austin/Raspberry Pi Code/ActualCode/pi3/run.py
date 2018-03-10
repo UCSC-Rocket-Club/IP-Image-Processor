@@ -25,7 +25,7 @@ def thread():
         xyforce = math.sqrt(axes['x'] ** 2 + axes['y'] ** 2)
         netforce = math.sqrt(xyforce ** 2 + axes['z'] ** 2)
 
-        if(netforce >= 3):
+        if(netforce >= 5):
             GPIO.output(10, GPIO.LOW)
             print('LAUNCH LAUNCH LAUNCH LAUNCH LAUNCH')
             break
