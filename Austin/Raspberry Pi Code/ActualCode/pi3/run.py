@@ -10,11 +10,11 @@ def thread():
     #p1 = Process(target=camera.record)
 
     print('Buckle up, butter cup. You just flipped my bitch switch\n')
-	GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
     GPIO.setup(10, GPIO.LOW)
-	GPIO.setup(21, GPIO.LOW)
-	GPIO.output(21, GPIO.HIGH)
+    GPIO.setup(21, GPIO.LOW)
+    GPIO.output(21, GPIO.HIGH)
 	
     adxl = ADXL345()
 
