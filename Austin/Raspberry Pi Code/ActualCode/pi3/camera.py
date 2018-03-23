@@ -16,6 +16,10 @@ def record():
     clock = 0
     camera = PiCamera()
     camera.resolution = (640, 480)
+    camera.exposure_mode = 'auto'
+    #camera.awb_mode = 'cloudy'
+    #camera.exposure_compensation = -9
+    #camera.saturation = 50
     camera.framerate = 30
     rawCapture = PiRGBArray(camera, size=(640, 480))
     startTime = time.clock()
@@ -34,7 +38,7 @@ def record():
         print('time: ' + str(clock))
         rawCapture.truncate(0)
 
-        if clock > 20:
+        if clock > 10:
             print('Camera Done ' + str(clock) +'s\n')
             rawCapture.close()
             camera.close()
