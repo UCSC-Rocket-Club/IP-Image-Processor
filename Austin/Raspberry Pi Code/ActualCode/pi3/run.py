@@ -9,14 +9,17 @@ import RPi.GPIO as GPIO
 def thread():
     #p1 = Process(target=camera.record)
 
-    print('Buckle up, butter cup. You just flipped my bitch switch\n')
+    print('\nBuckle up, butter cup. You just flipped my bitch switch\n')
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
     GPIO.setup(10, GPIO.LOW)
+    print('Set-up Pin 10\n')
     GPIO.setup(21, GPIO.LOW)
     GPIO.output(21, GPIO.HIGH)
+    print('Set-up Pin 21\n')
 	
     adxl = ADXL345()
+    print('Set-up ADXL345\n')
 
     GPIO.output(10, GPIO.HIGH)
         
@@ -25,10 +28,12 @@ def thread():
         xyforce = math.sqrt(axes['x'] ** 2 + axes['y'] ** 2)
         netforce = math.sqrt(xyforce ** 2 + axes['z'] ** 2)
 
-        if(netforce >= 5):
-            GPIO.output(10, GPIO.LOW)
-            print('LAUNCH LAUNCH LAUNCH LAUNCH LAUNCH')
-            break
+        if(netforce >= 7):
+	    time.sleep(0.25)
+	    if(netforce >= 7):
+                GPIO.output(10, GPIO.LOW)
+                print('LAUNCH LAUNCH LAUNCH LAUNCH LAUNCH')
+                break
     camera.record()
     #p1.start()
 
