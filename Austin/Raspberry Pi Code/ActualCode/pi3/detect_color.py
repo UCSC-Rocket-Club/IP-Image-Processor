@@ -18,13 +18,13 @@ def adjust_gamma(image, gamma=1.0):
     return cv2.LUT(image, table)
 
 def anal_video():
-    shutil.rmtree('/home/pi/prod/')
-    os.mkdir('/home/pi/prod')
+    #shutil.rmtree('/home/pi/prod/')
+    #os.mkdir('/home/pi/prod')
     folder = '/home/pi/prod/'
 
     timeStamp = str(time.time())
     fourcc = cv2.cv.CV_FOURCC('M','J','P','G')
-    video = cv2.VideoWriter(folder + timeStamp + '.avi', fourcc, 7, (640, 480))
+    video = cv2.VideoWriter(folder + timeStamp + '.avi', fourcc, 10, (640, 480))
     clock = 0
     start_time = time.clock()
     frames_render_time = time.time()
@@ -111,7 +111,7 @@ def process(frame):
     # Write Box for Blue
     for pic, contour in enumerate(contoursBlue):
         area = cv2.contourArea(contour)
-        if area > 300:
+        if area > 9:
             x,y,w,h = cv2.boundingRect(contour)
             cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
             cv2.putText(frame, 'BLUE',(x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0))
@@ -119,7 +119,7 @@ def process(frame):
     # Write Box for Pink
     for pic, contour in enumerate(contoursRed):
         area = cv2.contourArea(contour)
-        if area > 300:
+        if area > 9:
             x,y,w,h = cv2.boundingRect(contour)
             cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),2)
             cv2.putText(frame, 'PINK',(x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255))
@@ -127,10 +127,9 @@ def process(frame):
     # Write Box for Yellow
     for pic, contour in enumerate(contoursYellow):
         area = cv2.contourArea(contour)
-        if area > 300:
+        if area > 9:
             x,y,w,h = cv2.boundingRect(contour)
             cv2.rectangle(frame,(x,y),(x+w,y+h),(255,255,0),2)
             cv2.putText(frame, 'YELLOW',(x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,255,0))
             
     return frame
-
